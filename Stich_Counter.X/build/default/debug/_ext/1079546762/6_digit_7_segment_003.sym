@@ -1,0 +1,210 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016     @INTERRUPT_AREA
+017     @INTERRUPT_AREA
+018     @INTERRUPT_AREA
+019-021 system_count
+022-029 time
+02A     digit
+02B     digit1
+02C     digit10
+02D     digit100
+02E     digit1000
+02F     digit10000
+030     digit100000
+031     digita
+032     digitb
+033     digitc
+034     digitd
+035-038 Puls_count
+039     hours
+03A     minutes
+03B     i
+03C.0   rpm_flag
+03C.1   time_call_flag
+03C.2   s
+03C.3   ss
+03D     j
+03E     digit_rtc
+03F     manu_count
+040     DigitNum
+041     DigitNum1
+042-045 DataDigit
+046     hh
+047     mm
+048-04B digits
+04C-04D strtok.save
+04E-051 _Randseed
+052-055 data_display.i
+056     led_display_number.i
+057     led_display_number.j
+058     MAIN.@SCRATCH1
+059     @delay_ms1.P1
+05A-05D data_display.temp
+05B     led_display_number.Temp1
+05C     led_display_number.Temp2
+05D-060 led_display_number.digits
+05E     data_display.Counter_Enable
+05F     data_display.@SCRATCH1
+060     data_display.@SCRATCH2
+061-062 write_expanded_outputs.eo
+061     display.num
+061     data_display.@SCRATCH3
+061     led_display_number.@SCRATCH1
+062     @DIV88.P1
+062-06B display.sig
+062     data_display.@SCRATCH4
+063     write_expanded_outputs.i
+063     @DIV88.P1
+063     data_display.@SCRATCH5
+064     write_expanded_outputs.@SCRATCH1
+064     @DIV88.@SCRATCH1
+064     data_display.@SCRATCH6
+065     data_display.@SCRATCH7
+066     data_display.@SCRATCH8
+067-06A @DIV3232.P1
+06B-06E @DIV3232.P1
+06C     display.pattern
+06F     @DIV3232.@SCRATCH1
+070     @DIV3232.@SCRATCH2
+071     @DIV3232.@SCRATCH3
+072     @DIV3232.@SCRATCH4
+073     @DIV3232.@SCRATCH5
+F55     CCP_5
+F55     CCP_5_LOW
+F56     CCP_5_HIGH
+F58     CCP_4
+F58     CCP_4_LOW
+F59     CCP_4_HIGH
+F5E     CCP_3
+F5E     CCP_3_LOW
+F5F     CCP_3_HIGH
+F67     CCP_2
+F67     CCP_2_LOW
+F68     CCP_2_HIGH
+F78.6   C2OUT
+F79.6   C1OUT
+F80     PORTA
+F81     PORTB
+F81.1   Enable_SW
+F81.2   SW_1
+F81.3   SW_2
+F81.4   SW_3
+F81.5   SW_4
+F82     PORTC
+F83     PORTD
+F84     PORTE
+FA1     PIR2
+FA1.4   EEIF
+FA6.0   RD
+FA6     EECON1
+FA6.1   WR
+FA6.2   WREN
+FA6.6   CFGS
+FA6.7   EEPGD
+FA7     EECON2
+FA8     EEDATA
+FA9     EEADR
+FBE     CCP_1_LOW
+FBE     CCP_1
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PROGRAM_MEMORY.P3
+FE9-FEA @READ_PROGRAM_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+0000C6  @DIV3232
+000154  display
+000194  data_display
+00048C  @goto20241
+0004B2  @DIV88
+0004DA  write_expanded_outputs
+00051A  led_display_number
+000622  @goto20498
+000644  timer0_isr
+000672  TIMER1_isr
+0006C2  ext_isr
+000700  @delay_ms1
+000728  MAIN
+000728  @cinit1
+000774  @cinit2
+0136  StrtoulGO
+0136  StrtolGO
+
+Project Directory:
+    D:\2018-Projects\Stich Counter\Stich_Counter.X\
+
+Project Files:
+    6_digit_7_segment_003.c                                 [13-May-18 18:27  CRC=752D5AFF]
+    C:\Program Files\PICC\devices\18F46K22.h                [24-Feb-17 16:24  CRC=99BC8114]
+    HW_IO.h                                                 [13-May-18 12:02  CRC=77028E12]
+    C:\Program Files\PICC\drivers\stdio.h                   [31-Jul-07 14:24  CRC=4E4534F4]
+    C:\Program Files\PICC\drivers\string.h                  [26-Mar-15 12:34  CRC=C4814297]
+    C:\Program Files\PICC\drivers\stddef.h                  [05-Sep-14 11:47  CRC=897CEC6C]
+    C:\Program Files\PICC\drivers\ctype.h                   [03-Jan-08 14:55  CRC=2D1F019F]
+    C:\Program Files\PICC\drivers\stdlib.h                  [29-Jun-16 09:34  CRC=7E9CC16B]
+    internal_eeprom.h                                       [13-May-18 10:40  CRC=D7A21763]
+    74595.c                                                 [13-May-18 17:55  CRC=B55D3A3B]
+    DS1307.c                                                [13-May-18 13:52  CRC=2DD1133F]
+    MUX.c                                                   [13-May-18 18:20  CRC=5A45B0E0]
+    internal_eeprom.c                                       [13-May-18 10:41  CRC=E5A25C92]
+    system_counter.c                                        [13-May-18 10:41  CRC=1017EA95]
+
+Source signature=E8D3D89F
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=3D2D
+
+Units:
+    6_digit_7_segment_003 (main)
+
+Compiler Settings:
+    Processor:      PIC18F46K22
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    ICD Provisions: Yes
+    Compile Mode:       CCS5
+    Predefined symbols:
+       #define __DEBUG 1
+       #define __18F46K22 1
+
+Output Files:
+    XREF file:   build\default\debug\_ext\1079546762\6_digit_7_segment_003.xsym
+    Errors:      build\default\debug\_ext\1079546762\6_digit_7_segment_003.err
+    Ext Symbols: build\default\debug\_ext\1079546762\6_digit_7_segment_003.esym
+    INHX32:      build\default\debug\_ext\1079546762\6_digit_7_segment_003.hex
+    Symbols:     build\default\debug\_ext\1079546762\6_digit_7_segment_003.sym
+    List:        build\default\debug\_ext\1079546762\6_digit_7_segment_003.lst
+    Debug/COFF:  build\default\debug\_ext\1079546762\6_digit_7_segment_003.cof
+    Project:     6_digit_7_segment_003.ccspjt
+    Call Tree:   build\default\debug\_ext\1079546762\6_digit_7_segment_003.tre
+    Statistics:  build\default\debug\_ext\1079546762\6_digit_7_segment_003.STA

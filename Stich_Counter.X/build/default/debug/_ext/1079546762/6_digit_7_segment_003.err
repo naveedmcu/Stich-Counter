@@ -1,0 +1,4 @@
+D:\2018-Projects\Stich Counter\Stich_Counter.X\6_digit_7_segment_003.c:53:17:  Warning#202  Variable never used:   digit_rtc
+      Memory usage:   ROM=3%      RAM=2% - 3%
+      0 Errors,  1 Warnings.
+Build Successful.

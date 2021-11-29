@@ -1,0 +1,5 @@
+D:\2018-Projects\Stich Counter\Stich_Counter.X\6_digit_7_segment_003.c:290:1:  Warning#216  Interrupts disabled during call to prevent re-entrancy:  (@DIV88)
+D:\2018-Projects\Stich Counter\Stich_Counter.X\6_digit_7_segment_003.c:56:17:  Warning#202  Variable never used:   digit_rtc
+      Memory usage:   ROM=5%      RAM=3% - 4%
+      0 Errors,  2 Warnings.
+Build Successful.

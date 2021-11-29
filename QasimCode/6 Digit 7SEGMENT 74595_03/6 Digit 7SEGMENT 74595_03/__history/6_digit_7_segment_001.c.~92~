@@ -1,0 +1,127 @@
+#include <16F887.h>
+#include "stdio.h"
+#include "stdlib.h"
+//#device ADC=10
+#fuses HS, NOWDT, NOPUT, NOPROTECT, NODEBUG, NOBROWNOUT, NOLVP, NOCPD, NOWRT 
+#use delay( clock = 20000000 )
+//#use rs232( BAUD=4800, RCV=PIN_C7, XMIT=PIN_C6, STREAM=RS232, PARITY=N, BITS=8 )
+#zero_ram 
+///////////////////////////////////////////////////////////////////////////////
+#use fast_io(A)
+#use fast_io(B)
+#use fast_io(C)
+///////////////////////////////////////////////////////////////////////////////
+#byte PORTA = 0x05
+#byte PORTB = 0x06
+#byte PORTC = 0x07
+#byte PORTD = 0x08
+#byte PORTE = 0x09
+
+#bit dig_1 = PORTB.4
+#bit dig_2 = PORTB.5
+#bit SW1   = PORTB.0
+//////////////////////////////////////////////////////////////////////////////
+unsigned int display(unsigned int num);
+/////////////////////////////////////////////////////////////////////////////
+unsigned int digit, digit1, digit10, digit100,digit1000,digit10000,digit100000;
+unsigned int digita, digitb, digitc, digitd;
+unsigned int32 Puls_count;
+short s;
+//////////////////////////////////////////////////////////////////////////////
+#include <MUX.c>
+//////////////////////////////////////////////////////////////////////////////
+#int_ext
+void ext_isr(void) //call switch
+{ 
+   //delay_ms(20);
+  // int_flag = 1; //when interrupt is accure that flag is high
+   if(input(PIN_B0) == 1)
+     s = 1;
+   if(s == 1) {
+     if(input(PIN_B0) == 0) {
+       s = 0;
+       Puls_count++;
+       if(Puls_count > 999999)
+         Puls_count = 0;
+     }
+   }
+   //clear_interrupt(int_ext);               
+       
+} 
+/*//////////////////////////////////////////////////////////////////////////////
+#int_TIMER1
+void TIMER1_isr( void )
+{
+   set_timer1( 55295 );
+   system.m_second++;
+   if( system.m_second == 488 )
+   {
+      system.m_second = 0;
+      system.second++;
+      system.sec_inc = 1;
+      if( system.second >= 60 )
+      {
+         system.second = 0;
+         system.minute++;
+      }
+   }
+
+   if( analog_avg_counter > ( NO_OF_SAMPLES - 1 ) )
+   {
+      analog_avg_counter = 0;
+      if( system.initialized )
+      {
+         pressure[ 0 ].dummy = ( pressure[ 0 ].sum / NO_OF_SAMPLES );   pressure[ 0 ].sum = 0;
+         pressure[ 1 ].dummy = ( pressure[ 1 ].sum / NO_OF_SAMPLES );   pressure[ 1 ].sum = 0;
+
+         pressure[ 0 ].avg = ( pressure[ 0 ].dummy ) / pressure[ 0 ].calib;
+         pressure[ 1 ].avg = ( pressure[ 1 ].dummy ) / pressure[ 1 ].calib;
+      }
+      else
+      {
+         pressure[ 0 ].avg = 40.1;            pressure[ 0 ].sum = 0;
+         pressure[ 1 ].avg = 40.1;            pressure[ 1 ].sum = 0;
+      }
+   }
+   else
+   {
+      analog_avg_counter++;
+      set_adc_channel( 0 ); delay_us( AN_MUX_DELAY ); pressure[ 0 ].sum += read_adc();
+      set_adc_channel( 1 ); delay_us( AN_MUX_DELAY ); pressure[ 1 ].sum += read_adc();
+
+      system.sw_1 = SW_1;
+      system.sw_2 = SW_2;
+      system.sw_3 = SW_3;
+
+      RLY_0 = wlc.relay_0;
+      RLY_1 = wlc.relay_1;
+   }
+   restart_wdt();
+}
+*/
+///////////////////////////////////////////////////////////////////////////////
+void main()  
+{
+   set_tris_a(0x00); 
+   set_tris_b(0xff);
+   set_tris_c(0x00);
+   set_tris_d(0x00);
+   set_tris_e(0x00);
+   
+   ext_int_edge(0,H_TO_L );
+   
+   //clear_interrupt(INT_EXT);
+   
+   enable_interrupts(INT_EXT);
+   
+   enable_interrupts(GLOBAL);
+   
+///////////////////////////////////////////////////////////////////////////////  
+   while(true)
+   { 
+       //Puls_count++;
+       //delay_ms(1);
+       data_display(Puls_count, 0);    
+   }
+}
+

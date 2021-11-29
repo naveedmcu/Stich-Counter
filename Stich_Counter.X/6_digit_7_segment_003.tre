@@ -1,0 +1,115 @@
+ÀÄStich_Counter
+   ÃÄMAIN  0/676  Ram=1
+   ³  ÃÄ@cinit1  (Inline)  Ram=0
+   ³  ÃÄinit_ds1307  0/90  Ram=0
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÀÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ÃÄ@delay_ms1  0/40  Ram=1
+   ³  ÃÄds1307_read_nvram_byte  0/140  Ram=2
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÀÄ@I2C_READ_1  0/102  Ram=3
+   ³  ÃÄds1307_read_nvram_byte  0/140  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄds1307_read_nvram_byte  0/140  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄds1307_read_nvram_byte  0/140  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄ@delay_ms1  0/40  Ram=1
+   ³  ÃÄds1307_set_date_time  0/206  Ram=8
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄdecimal_to_BCD  0/60  Ram=2
+   ³  ³  ³  ÃÄ@DIV88  0/40  Ram=3
+   ³  ³  ³  ÀÄ@DIV88  0/40  Ram=3
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄdecimal_to_BCD  0/60  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄdecimal_to_BCD  0/60  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄdecimal_to_BCD  0/60  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄdecimal_to_BCD  0/60  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄdecimal_to_BCD  0/60  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄdecimal_to_BCD  0/60  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÀÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ÃÄds1307_get_time  (Inline)  Ram=8
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄ@I2C_READ_1  0/102  Ram=3
+   ³  ³  ÃÄBCD_to_decimal  0/26  Ram=2
+   ³  ³  ÃÄ@I2C_READ_1  0/102  Ram=3
+   ³  ³  ÃÄBCD_to_decimal  0/26  Ram=2
+   ³  ³  ÃÄ@I2C_READ_1  0/102  Ram=3
+   ³  ³  ÃÄBCD_to_decimal  0/26  Ram=2
+   ³  ³  ÃÄ@I2C_READ_1  0/102  Ram=3
+   ³  ³  ÃÄBCD_to_decimal  0/26  Ram=2
+   ³  ³  ÃÄ@I2C_READ_1  0/102  Ram=3
+   ³  ³  ÃÄBCD_to_decimal  0/26  Ram=2
+   ³  ³  ÃÄ@I2C_READ_1  0/102  Ram=3
+   ³  ³  ÃÄBCD_to_decimal  0/26  Ram=2
+   ³  ³  ÃÄ@I2C_READ_1  0/102  Ram=3
+   ³  ³  ÀÄBCD_to_decimal  0/26  Ram=2
+   ³  ÃÄds1307_write_nvram_byte  0/88  Ram=2
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÃÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ³  ÀÄ@I2C_WRITE_1  0/108  Ram=1
+   ³  ÃÄds1307_write_nvram_byte  0/88  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄds1307_write_nvram_byte  0/88  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÀÄds1307_write_nvram_byte  0/88  Ram=2
+   ³     ÀÄ*
+   ÃÄtimer0_isr  0/46  Ram=0
+   ³  ÃÄdata_display  0/760  Ram=13
+   ³  ³  ÃÄ@goto41983  0/38  Ram=0
+   ³  ³  ÃÄ@DIV3232  0/142  Ram=13
+   ³  ³  ÃÄdisplay  0/64  Ram=12
+   ³  ³  ÃÄ@DIV3232  0/142  Ram=13
+   ³  ³  ÃÄ@DIV3232  0/142  Ram=13
+   ³  ³  ÃÄdisplay  0/64  Ram=12
+   ³  ³  ÃÄ@DIV3232  0/142  Ram=13
+   ³  ³  ÃÄ@DIV3232  0/142  Ram=13
+   ³  ³  ÃÄdisplay  0/64  Ram=12
+   ³  ³  ÃÄ@DIV3232  0/142  Ram=13
+   ³  ³  ÃÄ@DIV3232  0/142  Ram=13
+   ³  ³  ÃÄdisplay  0/64  Ram=12
+   ³  ³  ÃÄ@DIV3232  0/142  Ram=13
+   ³  ³  ÃÄ@DIV3232  0/142  Ram=13
+   ³  ³  ÃÄdisplay  0/64  Ram=12
+   ³  ³  ÃÄ@DIV3232  0/142  Ram=13
+   ³  ³  ÃÄ@DIV3232  0/142  Ram=13
+   ³  ³  ÀÄdisplay  0/64  Ram=12
+   ³  ÀÄled_display_number  0/258  Ram=7
+   ³     ÃÄ@goto42237  0/34  Ram=0
+   ³     ÃÄ@DIV88  0/40  Ram=3
+   ³     ÃÄdisplay  0/64  Ram=12
+   ³     ÃÄwrite_expanded_outputs  0/64  Ram=4
+   ³     ÃÄ@DIV88  0/40  Ram=3
+   ³     ÃÄ@DIV88  0/40  Ram=3
+   ³     ÃÄdisplay  0/64  Ram=12
+   ³     ÃÄwrite_expanded_outputs  0/64  Ram=4
+   ³     ÃÄ@DIV88  0/40  Ram=3
+   ³     ÃÄdisplay  0/64  Ram=12
+   ³     ÃÄwrite_expanded_outputs  0/64  Ram=4
+   ³     ÃÄ@DIV88  0/40  Ram=3
+   ³     ÃÄ@DIV88  0/40  Ram=3
+   ³     ÃÄdisplay  0/64  Ram=12
+   ³     ÀÄwrite_expanded_outputs  0/64  Ram=4
+   ÃÄTIMER1_isr  0/82  Ram=0
+   ÀÄext_isr  0/62  Ram=0

@@ -1,0 +1,37 @@
+[PROJECT]
+Target=build\default\production\_ext\1079546762\6_digit_7_segment_003.hex
+Processor_Text=PIC18F46K22
+CCSVersion=5.070
+Compiler=PCH
+[Target Data]
+FileList=6_digit_7_segment_003.c
+[build\default\production\_ext\1079546762\6_digit_7_segment_003.c]
+Type=4
+[mru-list]
+1=build\default\production\_ext\1079546762\6_digit_7_segment_003.c
+[build\default\debug\_ext\1079546762\6_digit_7_segment_003.c]
+Type=4
+
+[ProjectLog]
+Days=2
+D1=09-10-2018
+D1_L=1
+D1_L1=[79226]Project Opened.
+D2=16-10-2018
+D2_L=3
+D2_L1=[16142]Project Opened.
+D2_L2=[16184]Started Editing.
+D2_L3=[16484]Stopped Editing.
+
+[Opened Files]
+1=6_digit_7_segment_003.c
+t1=1
+Count=1
+[6_digit_7_segment_003.c]
+Type=4
+
+[defines]
+buildcount=2
+[Units]
+Count=1
+1=6_digit_7_segment_003 (main)

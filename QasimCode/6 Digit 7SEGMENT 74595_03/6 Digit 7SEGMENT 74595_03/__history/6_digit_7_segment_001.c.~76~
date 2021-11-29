@@ -1,0 +1,86 @@
+#include <16F887.h>
+//#device ADC=10
+#fuses HS, NOWDT, NOPUT, NOPROTECT, NODEBUG, NOBROWNOUT, NOLVP, NOCPD, NOWRT 
+#use delay( clock = 20000000 )
+//#use rs232( BAUD=4800, RCV=PIN_C7, XMIT=PIN_C6, STREAM=RS232, PARITY=N, BITS=8 )
+#zero_ram 
+///////////////////////////////////////////////////////////////////////////////
+#use fast_io(A)
+#use fast_io(B)
+#use fast_io(C)
+///////////////////////////////////////////////////////////////////////////////
+#byte PORTA = 0x05
+#byte PORTB = 0x06
+#byte PORTC = 0x07
+
+#bit dig_1 = PORTB.4
+#bit dig_2 = PORTB.5
+#bit SW1   = PORTB.0
+//////////////////////////////////////////////////////////////////////////////
+unsigned int display(unsigned int num);
+/////////////////////////////////////////////////////////////////////////////
+unsigned int digit, digit1, digit10, digit100,digit1000,digit10000,digit100000;
+unsigned int digita, digitb, digitc, digitd, digite;
+//////////////////////////////////////////////////////////////////////////////     
+#int_ext
+void ext_isr(void) //call switch
+{ 
+   delay_ms(20);
+  // int_flag = 1; //when interrupt is accure that flag is high
+  /* if(input(PIN_B0) == 1)
+     s = 1;
+   if(s == 1) {
+     if(input(PIN_B0) == 0) {
+       s = 0;
+       i++;
+       if(i > 999999)
+         i = 0;
+     }
+   }*/
+   //clear_interrupt(int_ext);               
+       
+} 
+////////////////////////////////////////////////////////////////////////////////
+#include <MUX.c>
+//////////////////////////////////////////////////////////////////////////////
+void main()  
+{
+   set_tris_a(0x00); 
+   set_tris_b(0x0f);
+   set_tris_c(0x00);
+   
+   ext_int_edge(0,H_TO_L );
+   
+   clear_interrupt(INT_EXT);
+   
+   enable_interrupts(INT_EXT);
+   
+   enable_interrupts(GLOBAL);
+   
+///////////////////////////////////////////////////////////////////////////////  
+   while(true)
+   {
+      //if( !SW1 )
+      {
+        unsigned int32 i;
+         i++;
+         //delay_ms(1);
+         data_display(i);
+         if(i == 999999 ){i=0;}
+      }
+         
+       
+       
+   }
+}
+/*
+if( int_flag )
+{
+   i++;
+   int_flag = 0;
+   if( i > 999999 )
+   {
+      i = 0;
+   }
+}
+*/

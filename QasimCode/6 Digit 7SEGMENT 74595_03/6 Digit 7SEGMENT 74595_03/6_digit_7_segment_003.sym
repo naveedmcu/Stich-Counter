@@ -1,0 +1,234 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016     @INTERRUPT_AREA
+017     @INTERRUPT_AREA
+018     @INTERRUPT_AREA
+019     @INTERRUPT_AREA
+01A-022 system_count
+023-02A time
+02B     digit
+02C     digit1
+02D     digit10
+02E     digit100
+02F     digit1000
+030     digit10000
+031     digit100000
+032     digita
+033     digitb
+034     digitc
+035     digitd
+036-039 Puls_count
+03A     hours
+03B     minutes
+03C     i
+03D.0   rpm_flag
+03D.1   time_call_flag
+03D.2   s
+03D.3   ss
+03E     j
+03F     digit_rtc
+040     manu_count
+041-042 strtok.save
+043-046 _Randseed
+047     manu_function.rpm_delay
+048     ds1307_write.address
+048     led_display_number.j
+048     manu_function.@SCRATCH1
+048     rpm_manu.@SCRATCH1
+049     led_display_number.i
+049     ds1307_write.data_
+04A-04D led_display_number.digits
+04A     decimal_to_BCD.decimal_value
+04A     ds1307_write.@SCRATCH1
+04B     @I2C_WRITE_1.P1
+04B     decimal_to_BCD.@SCRATCH1
+04E-04F write_expanded_outputs.eo
+04E     led_display_number.@SCRATCH1
+04F     @DIV88.P1
+050     @DIV88.P1
+050     write_expanded_outputs.i
+051     write_expanded_outputs.@SCRATCH1
+051     @DIV88.@SCRATCH1
+052     timer0_isr.@SCRATCH1
+053-056 Reset_display.i
+057     Reset_display.reset_sw
+058-05B rpm_display.i
+058-05B data_display.i
+05C     rpm_display.Counter_Enable
+05C     data_display.Counter_Enable
+05D-060 rpm_display.rpm
+05D     data_display.@SCRATCH1
+05E     data_display.@SCRATCH2
+05F     data_display.@SCRATCH3
+060     data_display.@SCRATCH4
+061     display.num
+061     @delay_ms1.P1
+061     data_display.@SCRATCH5
+061     rpm_display.@SCRATCH1
+062-06B display.sig
+062     data_display.@SCRATCH6
+062     rpm_display.@SCRATCH2
+063     data_display.@SCRATCH7
+063     rpm_display.@SCRATCH3
+064     data_display.@SCRATCH8
+064     rpm_display.@SCRATCH4
+065-068 @MUL3232.P1
+065     rpm_display.@SCRATCH5
+066     rpm_display.@SCRATCH6
+067     rpm_display.@SCRATCH7
+068     rpm_display.@SCRATCH8
+069-06C @DIV3232.P1
+069-06C @MUL3232.P2
+06C     display.pattern
+06D-070 @DIV3232.P1
+06D     @MUL3232.@SCRATCH1
+06E     @MUL3232.@SCRATCH2
+06F     @MUL3232.@SCRATCH3
+070     @MUL3232.@SCRATCH4
+071     @MUL3232.@SCRATCH5
+071     @DIV3232.@SCRATCH1
+072     @MUL3232.@SCRATCH6
+072     @DIV3232.@SCRATCH2
+073     @DIV3232.@SCRATCH3
+074     @DIV3232.@SCRATCH4
+075     @DIV3232.@SCRATCH5
+F55     CCP_5
+F55     CCP_5_LOW
+F56     CCP_5_HIGH
+F58     CCP_4_LOW
+F58     CCP_4
+F59     CCP_4_HIGH
+F5E     CCP_3_LOW
+F5E     CCP_3
+F5F     CCP_3_HIGH
+F67     CCP_2_LOW
+F67     CCP_2
+F68     CCP_2_HIGH
+F78.6   C2OUT
+F79.6   C1OUT
+F80     PORTA
+F81     PORTB
+F81.1   Enable_SW
+F81.2   SW_1
+F81.3   SW_2
+F81.4   SW_3
+F81.5   SW_4
+F82     PORTC
+F83     PORTD
+F84     PORTE
+FA1     PIR2
+FA1.4   EEIF
+FA6     EECON1
+FA6.0   RD
+FA6.1   WR
+FA6.2   WREN
+FA6.6   CFGS
+FA6.7   EEPGD
+FA7     EECON2
+FA8     EEDATA
+FA9     EEADR
+FBE     CCP_1_LOW
+FBE     CCP_1
+FBF     CCP_1_HIGH
+FE1-FE2 @READ_PACKED_MEMORY.P1
+FE1-FE2 @WRITE_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @READ_PROGRAM_MEMORY.P2
+FE9-FEA @WRITE_PROGRAM_MEMORY.P3
+FE9-FEA @READ_PACKED_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+0000C6  ext_isr
+000104  @MUL3232
+000158  @DIV3232
+0001E6  display
+000226  @delay_ms1
+00024C  rpm_display
+000648  data_display
+000930  Reset_display
+000970  timer0_isr
+000994  TIMER1_isr
+0009E4  @I2C_WRITE_1
+000A50  init_ds1307
+000AA8  rpm_manu
+000AC6  @DIV88
+000AEE  decimal_to_BCD
+000B14  ds1307_write
+000B76  manu_function
+000C56  write_expanded_outputs
+000C96  led_display_number
+000D96  @cinit1
+000D96  MAIN
+000DCE  @cinit2
+0136  StrtoulGO
+0136  StrtolGO
+
+Project Directory:
+    D:\2018-Projects\Stich Counter\QasimCode\6 Digit 7SEGMENT 74595_03\6 Digit 7SEGMENT 74595_03\
+
+Project Files:
+    6_digit_7_segment_003.c                                 [12-May-18 23:50  CRC=5E796A0F]
+    C:\Program Files\PICC\devices\18F46K22.h                [24-Feb-17 16:24  CRC=99BC8114]
+    C:\Program Files\PICC\drivers\stdio.h                   [31-Jul-07 14:24  CRC=4E4534F4]
+    C:\Program Files\PICC\drivers\string.h                  [26-Mar-15 12:34  CRC=C4814297]
+    C:\Program Files\PICC\drivers\stddef.h                  [05-Sep-14 11:47  CRC=897CEC6C]
+    C:\Program Files\PICC\drivers\ctype.h                   [03-Jan-08 14:55  CRC=2D1F019F]
+    C:\Program Files\PICC\drivers\stdlib.h                  [29-Jun-16 09:34  CRC=7E9CC16B]
+    internal_eeprom.h                                       [10-Feb-16 16:43  CRC=D7A21763]
+    74595.c                                                 [12-May-18 23:43  CRC=B55D3A3B]
+    DS1307.c                                                [10-May-18 18:21  CRC=EBF0352B]
+    MUX.c                                                   [12-May-18 23:50  CRC=7D604527]
+    internal_eeprom.c                                       [28-Jan-16 16:04  CRC=E5A25C92]
+    system_counter.c                                        [12-May-18 23:52  CRC=1017EA95]
+
+Source signature=3C570FD0
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=79DC
+
+Units:
+    6_digit_7_segment_003 (main)
+
+Compiler Settings:
+    Processor:      PIC18F46K22
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    XREF file:   6_digit_7_segment_003.xsym
+    Errors:      6_digit_7_segment_003.err
+    Ext Symbols: 6_digit_7_segment_003.esym
+    INHX32:      6_digit_7_segment_003.hex
+    Symbols:     6_digit_7_segment_003.sym
+    List:        6_digit_7_segment_003.lst
+    Debug/COFF:  6_digit_7_segment_003.cof
+    Project:     6_digit_7_segment_003.ccspjt
+    Call Tree:   6_digit_7_segment_003.tre
+    Statistics:  6_digit_7_segment_003.STA

@@ -1,0 +1,704 @@
+unsigned int key_scan( void )
+{
+   if( !system_slc.sw_r )
+   {
+      delay_ms( 20 );
+      if( !system_slc.sw_1 ) { system_slc.sw_r = SET; return 1; }
+      if( !system_slc.sw_2 ) { system_slc.sw_r = SET; return 2; }
+      if( !system_slc.sw_3 ) { system_slc.sw_r = SET; return 3; }
+   }
+   else if( system_slc.sw_1 && system_slc.sw_2 && system_slc.sw_3 ) { system_slc.sw_r = RESET; }
+   return 9;
+}
+////////////////////////////////////////////////////////////////////////////////
+
+#separate
+void display_menu( void )
+{
+   if( system_slc.save_settings )
+   {
+      if( system_slc.save_settings_counter > 2 )
+      {
+         system_slc.save_settings_counter = 0;
+         system_slc.save_settings = 0;
+         menu.level = 0;
+         menu.page = 0;
+         clear_lcd();
+      }
+      else
+      {
+         system_slc.save_settings_counter++;
+         printf( lcd_putc, "\fSaving Values..." );
+         printf( lcd_putc, "\n  Please Wait   " );
+      }
+   }
+   else if( system_slc.entering_settings_mode )
+   {
+      if( system_slc.entering_settings_mode_counter > 2 )
+      {
+         system_slc.entering_settings_mode_counter = 0;
+         system_slc.entering_settings_mode = 0;
+         menu.page = 0;
+         clear_lcd();
+      }
+      else
+      {
+         system_slc.entering_settings_mode_counter++;
+         printf( lcd_putc, "\fSettings Mode..." );
+         printf( lcd_putc, "\n  Warning !!!   " );
+      }
+   }
+   else
+   {
+      switch( menu.level )
+      {
+         case 0:
+         {
+             switch( menu.page )
+            {
+               case 0:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf(lcd_putc,"\f%02d:%02d:%02d->>", cal.hour, cal.min, cal.sec ); 
+                  switch( cal.dow )
+                    {
+                        case 1: printf(lcd_putc, "Sun");break;
+                        case 2: printf(lcd_putc, "Mon");break;
+                        case 3: printf(lcd_putc, "Tue");break;
+                        case 4: printf(lcd_putc, "Wen");break;
+                        case 5: printf(lcd_putc, "Thu");break;
+                        case 6: printf(lcd_putc, "Fri");break;
+                        case 7: printf(lcd_putc, "Sat");break;
+                    } 
+                    printf(lcd_putc,"\n%02d/%02d/20%2d", cal.month, cal.day, cal.year );
+                  
+               } break;
+               case 1:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf(lcd_putc,"%02d:%02d:%02d", cal.hour, cal.min, cal.sec );
+                  if( slc.sensor_enable_disable )
+                  {
+                     printf( lcd_putc, "\nSonser Disable ..." );
+                  }
+                  else if( slc.manual_1_enable )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "munnal_1_enable  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.manual_1_on_time, slc.manual_1_off_time );
+                  }
+                  else if( slc.manual_2_enable )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "munnal_2_enable  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.manual_2_on_time, slc.manual_2_off_time );
+                  }
+                  else if( slc.manual_3_enable )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "munnal_3_enable  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.manual_3_on_time, slc.manual_3_off_time );
+                  }
+                  else if( slc.manual_4_enable )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "munnal_4_enable  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.manual_4_on_time, slc.manual_4_off_time );
+                  }
+                  else
+                  {
+                     printf( lcd_putc, "\nAuto Mode Enable  " );
+                  }
+               } break;
+               case 2:
+               {
+                  if( system_slc.MONTH_1 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "JANUARY  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_1_on_time,  slc.month_1_off_time );
+                  }
+                  else if( system_slc.MONTH_2 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "FEBRUARY  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_2_on_time,  slc.month_2_off_time );
+                  }
+                  else if( system_slc.MONTH_3 )
+                  { 
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "MARCH  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_3_on_time,  slc.month_3_off_time );
+                  }
+                  else if( system_slc.MONTH_4 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "APRIL  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_4_on_time,  slc.month_4_off_time );
+                  }
+                  else if( system_slc.MONTH_5 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "MAY  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_5_on_time,  slc.month_5_off_time );
+                  }
+                  else if( system_slc.MONTH_6 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "JUNE  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_6_on_time,  slc.month_6_off_time );
+                  }
+                  else if( system_slc.MONTH_7 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "JULY  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_7_on_time,  slc.month_7_off_time );
+                  }
+                  else if( system_slc.MONTH_8 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "AUGUST  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_8_on_time,  slc.month_8_off_time );
+                  }
+                  else if( system_slc.MONTH_9 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "SEPTEMBER  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_9_on_time,  slc.month_9_off_time );
+                  }
+                  else if( system_slc.MONTH_10 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "OCTOBER  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_10_on_time,  slc.month_10_off_time );
+                  }
+                  else if( system_slc.MONTH_11 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "NOVEMBER  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_11_on_time,  slc.month_11_off_time );
+                  }
+                  else if( system_slc.MONTH_12 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "DECEMBER  " );
+                     printf( lcd_putc, "\nON_T:%02d OFF_T:%02d", slc.month_12_on_time,  slc.month_12_off_time );
+                  }
+                  else
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "Time Out... " );
+                  }
+               } break;
+               case 3:
+               {
+                  if( !system_slc.in_1 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "Input 1 Appear  " );
+                  }
+                  else if( !system_slc.in_2 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "Input 2 Appear  " );
+                  }
+                  else if( !system_slc.in_3 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "Input 3 Appear  " );
+                  }
+                  else if( !system_slc.in_4 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "Input 4 Appear  " );
+                  }
+                  else if( !system_slc.in_5 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "Input 5 Appear  " );
+                  }
+                  else if( !system_slc.in_6 )
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "Input 6 Appear  " );
+                  }
+                  else
+                  {
+                     lcd_gotoxy( 1, 1 );
+                     printf( lcd_putc, "All Input Disappear " );
+                  }
+               }break;
+               case 4:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "Qasim Ali.\nMajid,Ashfiq " );
+               } break;
+               case 5:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "Msc Final Year.\nProject for SLC " );
+               } break;
+               case 6:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "<%s>", file_name_array );
+                  printf( lcd_putc, "\nCD:<%s>", compile_date_array );
+               } break;
+               case 7:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "\f Timer Min " );
+                  printf( lcd_putc, "\n Minute = %02d,%02d" ,system_slc.minute,system_slc.second);
+               } break;
+            }
+            if( !system_slc.sw_1 ) { menu.level_1_counter = 0; }
+            if( !system_slc.sw_2 ) { menu.level_1_counter = 0; }
+            if( !system_slc.sw_3 ) { menu.level_1_counter = 0; }
+            if( ++menu.level_1_counter > 30 ) { menu.level_1_counter = 0; menu.level = 0; menu.page = 0; }
+         } break;
+         case 1:
+         {
+            switch( menu.page )
+            {
+               case 0:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "Sensor Disable " );
+                  if( slc.sensor_enable_disable ) { printf( lcd_putc, "\n[YES]" ); }
+                  else { printf( lcd_putc, "\n[NO]" ); }
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_SENSOR_EN_DIS, slc.sensor_enable_disable ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { slc.sensor_enable_disable = 1; }
+                  else if( !system_slc.sw_3 ) { slc.sensor_enable_disable = 0; }
+               } break;
+               case 1:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "Enable Manual_1" );
+                  if( slc.manual_1_enable ) { printf( lcd_putc, "\n[YES]" ); }
+                  else { printf( lcd_putc, "\n[NO]" ); }
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_MANUAL_1_ENABLE, slc.manual_1_enable ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { slc.manual_1_enable = 1; }
+                  else if( !system_slc.sw_3 ) { slc.manual_1_enable = 0; }
+               } break;
+               case 2:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MANUAL_1 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.manual_1_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_MANUAL_1_ON_TIME, slc.manual_1_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.manual_1_on_time < MANUAL_1_ON_TIME_MAX - SLC_SP_STEP ) { slc.manual_1_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.manual_1_on_time > MANUAL_1_ON_TIME_MIN + SLC_SP_STEP ) { slc.manual_1_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 3:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MANUAL_1 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.manual_1_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_MANUAL_1_OFF_TIME, slc.manual_1_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.manual_1_off_time < MANUAL_1_ON_TIME_MAX - SLC_SP_STEP ) { slc.manual_1_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.manual_1_off_time > MANUAL_1_ON_TIME_MIN + SLC_SP_STEP ) { slc.manual_1_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 4:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "Enable Manual_2" );
+                  if( slc.manual_2_enable ) { printf( lcd_putc, "\n[YES]" ); }
+                  else { printf( lcd_putc, "\n[NO]" ); }
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_MANUAL_2_ENABLE, slc.manual_2_enable ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { slc.manual_2_enable = 1; }
+                  else if( !system_slc.sw_3 ) { slc.manual_2_enable = 0; }
+               } break;
+               case 5:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MANUAL_2 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.manual_2_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_MANUAL_2_ON_TIME, slc.manual_2_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.manual_2_on_time < MANUAL_2_ON_TIME_MAX - SLC_SP_STEP ) { slc.manual_2_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.manual_2_on_time > MANUAL_2_ON_TIME_MIN + SLC_SP_STEP ) { slc.manual_2_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 6:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MANUAL_2 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.manual_2_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_MANUAL_2_OFF_TIME, slc.manual_2_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.manual_2_off_time < MANUAL_2_ON_TIME_MAX - SLC_SP_STEP ) { slc.manual_2_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.manual_2_off_time > MANUAL_2_ON_TIME_MIN + SLC_SP_STEP ) { slc.manual_2_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 7:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "Enable Manual_3" );
+                  if( slc.manual_3_enable ) { printf( lcd_putc, "\n[YES]" ); }
+                  else { printf( lcd_putc, "\n[NO]" ); }
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_MANUAL_3_ENABLE, slc.manual_3_enable ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { slc.manual_3_enable = 1; }
+                  else if( !system_slc.sw_3 ) { slc.manual_3_enable = 0; }
+               } break;
+               case 8:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MANUAL_3 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.manual_3_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_MANUAL_3_ON_TIME, slc.manual_3_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.manual_3_on_time < manual_3_ON_TIME_MAX - SLC_SP_STEP ) { slc.manual_3_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.manual_3_on_time > manual_3_ON_TIME_MIN + SLC_SP_STEP ) { slc.manual_3_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 9:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MANUAL_3 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.manual_3_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_MANUAL_3_OFF_TIME, slc.manual_3_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.manual_3_off_time < manual_3_ON_TIME_MAX - SLC_SP_STEP ) { slc.manual_3_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.manual_3_off_time > manual_3_ON_TIME_MIN + SLC_SP_STEP ) { slc.manual_3_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 10:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "Enable manual_4" );
+                  if( slc.manual_4_enable ) { printf( lcd_putc, "\n[YES]" ); }
+                  else { printf( lcd_putc, "\n[NO]" ); }
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_manual_4_ENABLE, slc.manual_4_enable ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { slc.manual_4_enable = 1; }
+                  else if( !system_slc.sw_3 ) { slc.manual_4_enable = 0; }
+               } break;
+               case 11:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MANUAL_4 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.manual_4_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_MANUAL_4_ON_TIME, slc.manual_4_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.manual_4_on_time < manual_4_ON_TIME_MAX - SLC_SP_STEP ) { slc.manual_4_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.manual_4_on_time > manual_4_ON_TIME_MIN + SLC_SP_STEP ) { slc.manual_4_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 12:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MANUAL_4 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.manual_4_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_MANUAL_4_OFF_TIME, slc.manual_4_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.manual_4_off_time < manual_4_ON_TIME_MAX - SLC_SP_STEP ) { slc.manual_4_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.manual_4_off_time > manual_4_ON_TIME_MIN + SLC_SP_STEP ) { slc.manual_4_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 13:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 1 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_1_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_1, slc.month_1_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_1_on_time < MONTH_1_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_1_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_1_on_time > MONTH_1_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_1_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 14:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 1 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_1_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_1, slc.month_1_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_1_off_time < MONTH_1_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_1_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_1_off_time > MONTH_1_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_1_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 15:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 2 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_2_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_2, slc.month_2_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_2_on_time < MONTH_2_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_2_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_2_on_time > MONTH_2_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_2_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 16:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 2 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_2_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_2, slc.month_2_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_2_off_time < MONTH_2_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_2_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_2_off_time > MONTH_2_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_2_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 17:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 3 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_3_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_3, slc.month_3_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_3_on_time < MONTH_3_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_3_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_3_on_time > MONTH_3_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_3_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 18:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 3 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_3_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_3, slc.month_3_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_3_off_time < MONTH_3_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_3_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_3_off_time > MONTH_3_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_3_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 19:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 4 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_4_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_4, slc.month_4_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_4_on_time < MONTH_4_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_4_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_4_on_time > MONTH_4_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_4_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 20:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 4 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_4_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_4, slc.month_4_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_4_off_time < MONTH_4_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_4_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_4_off_time > MONTH_4_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_4_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 21:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 5 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_5_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_5, slc.month_5_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_5_on_time < MONTH_5_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_5_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_5_on_time > MONTH_5_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_5_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 22:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 5 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_5_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_5, slc.month_5_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_5_off_time < MONTH_5_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_5_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_5_off_time > MONTH_5_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_5_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 23:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 6 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_6_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_6, slc.month_6_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_6_on_time < MONTH_6_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_6_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_6_on_time > MONTH_6_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_6_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 24:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 6 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_6_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_6, slc.month_6_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_6_off_time < MONTH_6_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_6_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_6_off_time > MONTH_6_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_6_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 25:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 7 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_7_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_7, slc.month_7_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_7_on_time < MONTH_7_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_7_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_7_on_time > MONTH_7_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_7_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 26:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 7 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_7_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_7, slc.month_7_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_7_off_time < MONTH_7_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_7_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_7_off_time > MONTH_7_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_7_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 27:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 8 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_8_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_8, slc.month_8_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_8_on_time < MONTH_8_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_8_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_8_on_time > MONTH_8_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_8_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 28:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 8 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_8_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_8, slc.month_8_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_8_off_time < MONTH_8_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_8_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_8_off_time > MONTH_8_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_8_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 29:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 9 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_9_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_9, slc.month_9_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_9_on_time < MONTH_9_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_9_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_9_on_time > MONTH_9_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_9_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 30:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 9 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_9_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_9, slc.month_9_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_9_off_time < MONTH_9_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_9_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_9_off_time > MONTH_9_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_9_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 31:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 10 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_10_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_10, slc.month_10_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_10_on_time < MONTH_10_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_10_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_10_on_time > MONTH_10_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_10_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 32:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 10 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_10_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_10, slc.month_10_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_10_off_time < MONTH_10_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_10_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_10_off_time > MONTH_10_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_10_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 33:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 11 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_11_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_11, slc.month_11_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_11_on_time < MONTH_11_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_11_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_11_on_time > MONTH_11_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_11_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 34:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 11 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_11_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_11, slc.month_11_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_11_off_time < MONTH_11_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_11_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_11_off_time > MONTH_11_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_11_off_time -= SLC_SP_STEP; } }
+               } break;
+               case 35:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 12 L ON TIME" );
+                  printf( lcd_putc, "\nON TIME[%02d]T  ", slc.month_12_on_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_ON_TIME_FOR_MONTH_12, slc.month_1_on_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_12_on_time < MONTH_1_ON_TIME_MAX - SLC_SP_STEP ) { slc.month_12_on_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_12_on_time > MONTH_1_ON_TIME_MIN + SLC_SP_STEP ) { slc.month_12_on_time -= SLC_SP_STEP; } }
+               } break;
+               case 36:
+               {
+                  lcd_gotoxy( 1, 1 );
+                  printf( lcd_putc, "MTH 12 L OFF TIME" );
+                  printf( lcd_putc, "\nOFF TIME[%02d]T  ", slc.month_12_off_time );
+                  if( !system_slc.sw_2 && !system_slc.sw_3 ) { write_internal_eeprom( EE_SLC_OFF_TIME_FOR_MONTH_12, slc.month_12_off_time ); system_slc.save_settings = 1; }
+                  else if( !system_slc.sw_2 ) { if( slc.month_12_off_time < MONTH_12_OFF_TIME_MAX - SLC_SP_STEP ) { slc.month_12_off_time += SLC_SP_STEP; } }
+                  else if( !system_slc.sw_3 ) { if( slc.month_12_off_time > MONTH_12_OFF_TIME_MIN + SLC_SP_STEP ) { slc.month_12_off_time -= SLC_SP_STEP; } }
+               } break;
+                 
+            }
+            if( !system_slc.sw_1 ) { menu.level_1_counter = 0; }
+            if( !system_slc.sw_2 ) { menu.level_1_counter = 0; }
+            if( !system_slc.sw_3 ) { menu.level_1_counter = 0; }
+            if( ++menu.level_1_counter > 10 ) { menu.level_1_counter = 0; menu.level = 0; menu.page = 0; }
+         } break;
+      }
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void switch_menu( void )
+{
+   if( !system_slc.save_settings && !system_slc.entering_settings_mode )
+   {
+      if( menu.level != 1 )
+      {
+         if( system_slc.key_press == 3 )
+         {
+            if( menu.page < menu.page_limit[ menu.level ] ) { menu.page++; clear_lcd(); }
+            menu.level_1_counter = 0;
+         }
+         if( system_slc.key_press == 2 )
+         {
+            if( menu.page > 0 ) { menu.page--; }
+            menu.level_1_counter = 0;
+            clear_lcd();
+         }
+         if( system_slc.key_press == 1 )
+         {
+            if( ++menu.level > 1 ) { menu.level = 0; }
+            if( menu.level == 1 ) { system_slc.entering_settings_mode = 1; }
+            else { menu.page = 0; }
+            clear_lcd();
+         }
+      }
+      else
+      {
+         if( system_slc.key_press == 1 )
+         {
+            menu.level_1_counter = 0;
+            if( ++menu.page > menu.page_limit[ menu.level ] ) { menu.page = 0; }
+            clear_lcd();
+         }
+      }
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void menu_init( void )
+{
+   menu.level = 0;
+   menu.page = 0;
+
+   menu.page_limit[ 0 ] = 7;
+   menu.page_limit[ 1 ] = 36;
+
+   delay_ms( 1000 );
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void second_tick( void )
+{
+   if( system_slc.sec_inc )
+   {
+      system_slc.sec_inc = 0;
+      get_date_time();
+      //slc_function();
+      sensor_en_dis_function();
+      manual_setting_function();
+      
+      if( !system_slc.initialized )
+      {
+         if( ++system_slc.init_count > 5 )
+         {
+            system_slc.init_count = 0;
+            system_slc.initialized = 1;
+            clear_lcd();
+         }
+
+         if( system_slc.init_count == 3 )
+         {
+            printf( lcd_putc, "\f<%s>", file_name_array );
+            printf( lcd_putc, "\n<CD %s>", compile_date_array );
+         }
+      }
+      else
+      {
+         display_menu();
+      }
+   }
+   if( system_slc.minute == 1 )
+   {
+      //system_slc.minute = 0;
+      get_date_time();
+      
+   }
+   
+   system_slc.input_appear = input_scan();
+   system_slc.key_press = key_scan();
+   switch_menu();
+   
+}

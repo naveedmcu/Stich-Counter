@@ -1,0 +1,5 @@
+>>> Warning 216 "6_digit_7_segment_003.c" Line 179(1,2): Interrupts disabled during call to prevent re-entrancy:  (@delay_ms1)
+>>> Warning 202 "6_digit_7_segment_003.c" Line 76(17,26): Variable never used:   digit_rtc
+      Memory usage:   ROM=6%      RAM=2% - 3%
+      0 Errors,  2 Warnings.
+Build Successful.

@@ -1,0 +1,49 @@
+[PROJECT]
+Target=6_digit_7_segment_003.hex
+Processor_Text=PIC18F46K22
+CCSVersion=5.070
+Compiler=PCH
+[Target Data]
+FileList=6_digit_7_segment_003.c
+[Directories]
+Include=C:\Program Files\PICC\devices\;C:\Program Files\PICC\drivers\
+[6_digit_7_segment_003.c]
+Type=4
+[mru-list]
+1=6_digit_7_segment_003.c
+[Opened Files]
+1=6_digit_7_segment_003.c
+2=C:\Users\andoird\AppData\Local\Temp\WPDNSE\{0004D907-0001-18B5-0000-000000000000}\remote main.c
+3=internal_eeprom.h
+4=DS1307.c
+5=MUX.c
+6=internal_eeprom.c
+7=system_counter.c
+8=
+9=74595.c
+10=C:\USB Data 03-24-2018\MainLED-RS485.X\LEDdisplay.c
+11=C:\USB Data 03-24-2018\MainLED-RS485.X\74595.c
+12=
+t1=37
+t2=17
+Count=1
+
+[ProjectLog]
+Days=2
+D1=13-05-2018
+D1_L=5
+D1_L1=[38332]Project Opened.
+D1_L2=[38662]Project Closed.
+D1_L3=[39041]Project Opened.
+D1_L4=[48989]Project Closed.
+D1_L5=[50106]Project Opened.
+D2=18-05-2018
+D2_L=2
+D2_L1=[75500]Project Opened.
+D2_L2=[75541]Project Closed.
+
+[defines]
+buildcount=2
+[Units]
+Count=1
+1=6_digit_7_segment_003 (main)
